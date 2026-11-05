@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>OAuth2 / OpenID Connect</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <span class="brand">OAuth2 / OpenID Connect demo</span>
+    <span class="who" th:text="${authenticated} ? 'Signed in as ' + ${name} : 'Not signed in'"></span>
+</div>
+
+<div class="card">
+    <h1>Externalised authentication</h1>
+    <p class="muted">
+        This application does not store any credential: the identity comes from an
+        OAuth2 / OpenID Connect provider (Google or Keycloak).
+    </p>
+
+    <div class="alert info" th:if="${!authenticated}">
+        Open <code>/profile</code> (or click below) to be redirected to the provider.
+    </div>
+
+    <div class="links">
+        <a th:href="@{/profile}">Open my profile</a>
+        <a th:if="${authenticated}" th:href="@{/profile/attributes}">Raw ID token attributes</a>
+    </div>
+
+    <form th:if="${authenticated}" th:action="@{/logout}" method="post">
+        <button type="submit" class="danger">Sign out</button>
+    </form>
+</div>
+</body>
+</html>
